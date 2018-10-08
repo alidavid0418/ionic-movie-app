@@ -16,7 +16,7 @@
 
   <!-- pass the genre object into virtual scroll -->
   <ion-list [virtualScroll]="genres">
-    <ion-item *virtualItem="let genre" text-wrap>
+    <ion-item *virtualItem='let genre' text-wrap>
       <button (click)="launchMoviesByGenrePage(genre)" ion-button clear color="dark">
         <h2 style="font-weight:bold">{{ genre.name }}</h2>
       </button>

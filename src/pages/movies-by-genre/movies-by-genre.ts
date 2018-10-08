@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { MovieServiceProvider } from '../../providers/movie-service/movie-service';
 
-/**
- * Generated class for the MoviesByGenrePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -14,12 +9,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'movies-by-genre.html',
 })
 export class MoviesByGenrePage {
+  movies:any[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public movieService: MovieServiceProvider, public modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
+    this.movieService.getMoviesByGenre(this.navParams.get('id'))
+    .subscribe(data => {
+      this.movies = data.results;
+    });
+
     console.log('ionViewDidLoad MoviesByGenrePage');
+  }
+
+  launchMovieDetailsPage(movie) {
+    let movieModal = this.modalCtrl.create('MovieDetailsPage', movie);
+    movieModal.present();
   }
 
 }
